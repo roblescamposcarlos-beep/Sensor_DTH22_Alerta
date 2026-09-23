@@ -1,0 +1,83 @@
+{
+	"name": "Leer DTH22",
+	"flow": [
+		{
+			"id": 1,
+			"module": "gateway:CustomWebHook",
+			"version": 1,
+			"parameters": {
+				"hook": 2847236,
+				"maxResults": 1
+			},
+			"metadata": {
+				"restore": {
+					"parameters": {
+						"hook": {
+							"data": { "editable": "true" },
+							"label": "Leer DTH11"
+						}
+					}
+				},
+				"designer": { "x": 0, "y": 0 },
+				"interface": [
+					{ "name": "temperatura", "type": "number", "label": "temperatura" }
+				],
+				"parameters": [
+					{ "name": "hook", "type": "hook:gateway-webhook", "label": "Webhook", "required": true },
+					{ "name": "maxResults", "type": "number", "label": "Maximum number of results" }
+				]
+			}
+		},
+		{
+			"id": 2,
+			"module": "telegram:SendReplyMessage",
+			"version": 1,
+			"parameters": {
+				"__IMTCONN__": 11265172
+			},
+			"mapper": {
+				"text": "⚠️ El cuarto está muy caliente ({{1.temperatura}})\nEnciende el aire acondicionado.",
+				"chatId": "8708048297",
+				"parseMode": "",
+				"replyMarkup": "",
+				"messageThreadId": "",
+				"replyToMessageId": "",
+				"replyMarkupAssembleType": "reply_markup_enter"
+			},
+			"metadata": {
+				"restore": {
+					"expect": {
+						"parseMode": { "label": "Empty" },
+						"replyMarkupAssembleType": { "label": "Enter the Reply Markup" }
+					},
+					"parameters": {
+						"__IMTCONN__": {
+							"data": { "scoped": "true", "connection": "telegram" },
+							"label": "Temperatura"
+						}
+					}
+				},
+				"designer": { "x": 300, "y": 0 },
+				"parameters": [
+					{ "name": "__IMTCONN__", "type": "account:telegram", "label": "Connection", "required": true }
+				]
+			}
+		}
+	],
+	"metadata": {
+		"instant": true,
+		"version": 1,
+		"scenario": {
+			"dlq": false,
+			"slots": null,
+			"dataloss": false,
+			"maxErrors": 3,
+			"autoCommit": true,
+			"roundtrips": 1,
+			"sequential": false,
+			"confidential": false,
+			"freshVariables": false,
+			"autoCommitTriggerLast": true
+		}
+	}
+}
